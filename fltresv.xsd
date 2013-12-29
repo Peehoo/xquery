@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:simpleType name="flight_number">
+		<xs:restriction base="xs:integer">
+			<xs:pattern value="[1-9]{1}[0-9]{1,2}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="Flights">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Flight" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:all>
+							<xs:element name="flight_number" type="flight_number"/>
+							<xs:element name="departure_time" type="xs:time" maxOccurs="1" minOccurs="1"/>
+							<xs:element name="duration_in_mins" type="xs:positiveInteger" minOccurs="1" maxOccurs="1"/>
+							<xs:element name="capacity" type="xs:positiveInteger" maxOccurs="1" minOccurs="1"/>
+							<xs:element name="origin" type="xs:string" maxOccurs="1" minOccurs="1"/>
+							<xs:element name="destination" type="xs:string" maxOccurs="1" minOccurs="1"/>
+						</xs:all>
+						<xs:attribute name="seasonal" type="xs:boolean" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="Request" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Agent_name" type="xs:string" maxOccurs="1" minOccurs="1"/>
+							<xs:element name="Request_date" type="xs:date" minOccurs="1" maxOccurs="1"/>
+							<xs:element name="contact_person" maxOccurs="1" minOccurs="0">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="name" type="xs:string" maxOccurs="1" minOccurs="1"/>
+										<xs:element name="phone" maxOccurs="1" minOccurs="1">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:pattern value="[0-9]{3}-[a-zA-Z0-9]{3}-[a-zA-Z0-9]{4}"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="Reservation" minOccurs="1" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="Flight" type="flight_number"/>
+										<xs:element name="travel_date" type="xs:date"/>
+										<xs:element name="number_of_seats" type="xs:positiveInteger"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
